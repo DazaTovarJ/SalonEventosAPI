@@ -44,6 +44,16 @@ public class Event {
         this.updatedAt = LocalDateTime.now();
     }
 
+    public Event(long id, String eventType, int guests, LocalDateTime startTime) {
+        this.id = id;
+        this.eventType = eventType;
+        this.guests = guests;
+        this.startTime = startTime;
+        this.state = 1;
+        this.createdAt = LocalDateTime.now();
+        this.updatedAt = LocalDateTime.now();
+    }
+
     public static String[] getEventTypes() {
         return eventTypes;
     }

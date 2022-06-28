@@ -33,11 +33,20 @@ public class EventAccessor {
             String eventType = rs.getString("event_type");
             int guests = rs.getInt("guests");
             LocalDateTime startTime = rs.getTimestamp("start_time").toLocalDateTime();
-            LocalDateTime endTime = rs.getTimestamp("end_time").toLocalDateTime();
+            Timestamp endTimestamp = rs.getTimestamp("end_time");
+            LocalDateTime endTime = null;
+            if (!rs.wasNull()) {
+                endTime = endTimestamp.toLocalDateTime();
+            }
             LocalDateTime createdAt = rs.getTimestamp("created_at").toLocalDateTime();
             LocalDateTime updatedAt = rs.getTimestamp("updated_at").toLocalDateTime();
 
-            Event event = new Event(id, eventType, guests, startTime, endTime);
+            Event event = null;
+            if (endTime != null) {
+                event = new Event(id, eventType, guests, startTime, endTime);
+            } else {
+                event = new Event(id, eventType, guests, startTime);
+            }
 
             event.setCreatedAt(createdAt);
             event.setUpdatedAt(updatedAt);
@@ -52,8 +61,6 @@ public class EventAccessor {
         String query = "SELECT * FROM events WHERE id = ? AND state = 1";
         Event event;
 
-        System.out.println(eventId);
-
         Connection conn = connection.getConnection();
         PreparedStatement ps = conn.prepareStatement(query);
         ps.setLong(1, eventId);
@@ -64,11 +71,19 @@ public class EventAccessor {
             String eventType = rs.getString("event_type");
             int guests = rs.getInt("guests");
             LocalDateTime startTime = rs.getTimestamp("start_time").toLocalDateTime();
-            LocalDateTime endTime = rs.getTimestamp("end_time").toLocalDateTime();
+            Timestamp endTimestamp = rs.getTimestamp("end_time");
+            LocalDateTime endTime = null;
+            if (!rs.wasNull()) {
+                endTime = endTimestamp.toLocalDateTime();
+            }
             LocalDateTime createdAt = rs.getTimestamp("created_at").toLocalDateTime();
             LocalDateTime updatedAt = rs.getTimestamp("updated_at").toLocalDateTime();
 
-            event = new Event(id, eventType, guests, startTime, endTime);
+            if (endTime != null) {
+                event = new Event(id, eventType, guests, startTime, endTime);
+            } else {
+                event = new Event(id, eventType, guests, startTime);
+            }
 
             event.setCreatedAt(createdAt);
             event.setUpdatedAt(updatedAt);
@@ -88,12 +103,30 @@ public class EventAccessor {
 
         String query = "INSERT INTO events(event_type, guests, start_time, end_time) VALUES (?, ?, ?, ?)";
 
+        System.out.println(event.getEndTime());
         Connection conn = connection.getConnection();
         PreparedStatement ps = conn.prepareStatement(query);
         ps.setString(1, event.getEventType());
         ps.setInt(2, event.getGuests());
         ps.setTimestamp(3, Timestamp.valueOf(event.getStartTime()));
         ps.setTimestamp(4, Timestamp.valueOf(event.getEndTime()));
+        ps.executeUpdate();
+    }
+
+    public void addNoEndTime(Event event) throws SQLException {
+        Arrays.sort(Event.getEventTypes());
+
+        if (Arrays.binarySearch(Event.getEventTypes(), event.getEventType()) < 0) {
+            throw new NoSuchElementException("Invalid event type");
+        }
+
+        String query = "INSERT INTO events(event_type, guests, start_time) VALUES (?, ?, ?)";
+
+        Connection conn = connection.getConnection();
+        PreparedStatement ps = conn.prepareStatement(query);
+        ps.setString(1, event.getEventType());
+        ps.setInt(2, event.getGuests());
+        ps.setTimestamp(3, Timestamp.valueOf(event.getStartTime()));
         ps.executeUpdate();
     }
 

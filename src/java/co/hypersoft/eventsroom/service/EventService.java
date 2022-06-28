@@ -44,7 +44,11 @@ public class EventService {
     public Event addEvent(Event evt) {
         try {
             evt.setId(getMax());
-            accessor.add(evt);
+            if (evt.getEndTime() != null && !evt.getEndTime().toString().isEmpty()) {
+                accessor.add(evt);
+            } else {
+                accessor.addNoEndTime(evt);
+            }
 
             return evt;
         } catch (SQLException ex) {
