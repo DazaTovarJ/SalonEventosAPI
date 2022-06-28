@@ -92,7 +92,7 @@ public class EventResource {
         } else {
             return Response
                     .status(Response.Status.BAD_REQUEST)
-                    .entity(new Message(200, "Event succesfully deleted"))
+                    .entity(new Message(400, "Couldn't delete the event"))
                     .build();
         }
     }

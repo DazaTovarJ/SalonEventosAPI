@@ -103,7 +103,6 @@ public class EventAccessor {
 
         String query = "INSERT INTO events(event_type, guests, start_time, end_time) VALUES (?, ?, ?, ?)";
 
-        System.out.println(event.getEndTime());
         Connection conn = connection.getConnection();
         PreparedStatement ps = conn.prepareStatement(query);
         ps.setString(1, event.getEventType());
