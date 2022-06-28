@@ -3,9 +3,8 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/home/jdaza/dev/salon-eventos/SalonEventosAPI/src/java/co/hypersoft/eventsroom/App.java</file>
-            <file>file:/home/jdaza/dev/salon-eventos/SalonEventosAPI/src/java/co/hypersoft/eventsroom/models/Event.java</file>
-            <file>file:/home/jdaza/dev/salon-eventos/SalonEventosAPI/web/index.html</file>
+            <file>file:/home/jdaza/dev/salon-eventos/SalonEventosAPI/src/java/co/hypersoft/eventsroom/filters/CORSFilter.java</file>
+            <file>file:/home/jdaza/dev/salon-eventos/SalonEventosAPI/src/java/co/hypersoft/eventsroom/models/EventAccessor.java</file>
         </group>
     </open-files>
 </project-private>

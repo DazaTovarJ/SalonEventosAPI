@@ -44,7 +44,6 @@ public class EventAccessor {
 
             events.add(event);
         }
-        Event.setNumberOfUsers(events.size());
 
         return events;
     }
@@ -105,7 +104,7 @@ public class EventAccessor {
             throw new NoSuchElementException("Invalid event type");
         }
 
-        String query = "UPDATE events SET event_type = ?, guests = ?, start_time = ?, end_time = ?, updated_at = CURRENT_TIMESTAMP() WHERE id = ?";
+        String query = "UPDATE events SET event_type = ?, guests = ?, start_time = ?, end_time = ?, WHERE id = ?";
 
         Connection conn = connection.getConnection();
         PreparedStatement ps = conn.prepareStatement(query);

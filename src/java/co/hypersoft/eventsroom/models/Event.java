@@ -12,7 +12,8 @@ import java.time.LocalDateTime;
  */
 public class Event {
 
-    private static String[] eventTypes = new String[]{"Grado", "Matrimonio", "Cumpleaños"};
+    private static String[] eventTypes
+            = new String[]{"Graduation", "Wedding", "Birthday"};
     private static int numberOfUsers = 0;
 
     private long id;
